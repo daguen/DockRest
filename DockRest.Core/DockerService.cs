@@ -11,32 +11,50 @@ public class DockerService
 
     public DockerService()
     {
-        client = new DockerClientConfiguration(
-            new Uri("unix:///var/run/docker.sock"))
-            .CreateClient();
+        try
+        {
+            client = new DockerClientConfiguration(
+                new Uri("unix:///var/run/docker.sock"))
+                .CreateClient();            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error: {e.Message}");
+            Console.WriteLine(e.StackTrace);
+        }
     }
 
     public async Task<List<Container>> GetContainers()
     {
-        IList<ContainerListResponse> dockerContainers = await client.Containers.ListContainersAsync(
-            new ContainersListParameters()
-            {
-                Limit = 20,
-            });
-
-        List<Container> containers = new List<Container>();
-
-        foreach (ContainerListResponse dockerContainer in dockerContainers)
+        try
         {
-            string name = dockerContainer.Names.First().Replace("/", "");
-            string status = FormatStatus(dockerContainer.Status);
-            bool isRunning = false;
-            if (dockerContainer.State.ToLower() == "running") isRunning = true;
+            IList<ContainerListResponse> dockerContainers = await client.Containers.ListContainersAsync(
+                new ContainersListParameters()
+                {
+                    Limit = 20,
+                });
 
-            containers.Add(new Container(this, dockerContainer.ID, name, status, dockerContainer.Image, isRunning));
+            List<Container> containers = new List<Container>();
+
+            foreach (ContainerListResponse dockerContainer in dockerContainers)
+            {
+                string name = dockerContainer.Names.First().Replace("/", "");
+                string status = FormatStatus(dockerContainer.Status);
+                bool isRunning = false;
+                if (dockerContainer.State.ToLower() == "running") isRunning = true;
+
+                containers.Add(new Container(this, dockerContainer.ID, name, status, dockerContainer.Image, isRunning));
+            }
+
+            return containers;
         }
-
-        return containers;
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error: {e.Message}");
+            if (e.InnerException != null) Console.WriteLine($"Error: {e.InnerException.Message}");
+            Console.WriteLine(e.StackTrace);
+            return new List<Container>();
+        }
     }
     private string FormatStatus(string status)
     {
