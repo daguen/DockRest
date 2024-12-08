@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using DockRest.Core;
 using DockRest.Core.Models;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System.Xml.Linq;
 
 namespace DockRest.API.Controllers;
 
@@ -61,5 +65,30 @@ public class ContainersController : ControllerBase
 
         dockerService.Stop(foundContainer.Id);
         return foundContainer;
+    }
+    //POST /api/Containers/name
+    [HttpPost("{name}")]
+    public IActionResult PostState(string name, [FromBody] ContainerRequest request)
+    {
+        List<Container> containers = dockerService.GetContainers().Result;
+
+        Container foundContainer = containers.Where(c => c.Name == name).FirstOrDefault();
+
+        if (request == null || string.IsNullOrEmpty(request.Command))
+        {
+            return BadRequest("Invalid state.");
+        }
+        if (request.Command == "start")
+        {
+            if (foundContainer == null) return null;
+            dockerService.Start(foundContainer.Id);
+        }
+        if (request.Command == "stop")
+        {
+            if (foundContainer == null) return null;
+            dockerService.Stop(foundContainer.Id);
+        }
+
+        return BadRequest("Unknown state.");
     }
 }
