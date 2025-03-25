@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DockRest.API", "DockRest.AP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DockRest.Core", "DockRest.Core\DockRest.Core.csproj", "{7B8447C1-AEF0-4B1C-987F-72D9568A661E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DockRest.Web", "DockRest.Web\DockRest.Web.csproj", "{C7BCF394-4576-4AAA-AA9E-5E9C3A6DE820}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7B8447C1-AEF0-4B1C-987F-72D9568A661E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B8447C1-AEF0-4B1C-987F-72D9568A661E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B8447C1-AEF0-4B1C-987F-72D9568A661E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7BCF394-4576-4AAA-AA9E-5E9C3A6DE820}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7BCF394-4576-4AAA-AA9E-5E9C3A6DE820}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7BCF394-4576-4AAA-AA9E-5E9C3A6DE820}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7BCF394-4576-4AAA-AA9E-5E9C3A6DE820}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

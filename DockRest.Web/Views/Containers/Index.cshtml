@@ -1,0 +1,42 @@
+﻿@model IEnumerable<DockRest.Core.Models.Container>
+
+@{
+    ViewData["Title"] = "Containers";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Containers</h1>
+</div>
+
+<table style="width:100%">
+    <tr>
+        <th>Actions</th>
+        <th>Name</th>
+        <th>Status</th>
+    </tr>
+    @foreach (var container in Model)
+    {
+        <tr>
+            <td>
+                <div class="d-flex gap-2">
+                    @if (!container.IsRunning)
+                    {
+                        <form asp-action="StartContainer" method="post">
+                            <input type="hidden" name="id" value="@container.Id" />
+                            <button type="submit" class="btn btn-success">Start</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-action="StopContainer" method="post">
+                            <input type="hidden" name="id" value="@container.Id" />
+                            <button type="submit" class="btn btn-danger">Stop</button>
+                        </form>
+                    }
+                </div>
+            </td>
+            <td>@container.Name</td>
+            <td>@container.Status</td>
+        </tr>
+    }
+</table>
