@@ -11,7 +11,7 @@ docker run \
 --name dockrest \
 -p 88:8080 \
 -v /var/run/docker.sock:/var/run/docker.sock \
-ghcr.io/retaweb/dockrest
+ghcr.io/daguen/dockrest
 ```
 
 ### Docker Compose
@@ -20,7 +20,7 @@ ghcr.io/retaweb/dockrest
 services:
   dockrest:
     container_name: dockrest
-    image: ghcr.io/retaweb/dockrest
+    image: ghcr.io/daguen/dockrest
     restart: unless-stopped
     ports:
     - 88:8080
